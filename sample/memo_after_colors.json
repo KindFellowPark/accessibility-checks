@@ -1,0 +1,9 @@
+{
+  "floor": 4.5,
+  "text_pairings": [
+    { "label": "body text", "fg": "#1A202C", "bg": "#FFFFFF" },
+    { "label": "memo header lines", "fg": "#4A5568", "bg": "#FFFFFF" },
+    { "label": "section heading", "fg": "#1F3A5F", "bg": "#FFFFFF" },
+    { "label": "RSVP deadline callout", "fg": "#1F3A5F", "bg": "#FFFFFF" }
+  ]
+}

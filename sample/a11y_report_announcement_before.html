@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility report: announcement_before.html</title>
+<meta name="content-languages" content="en">
+<style>
+:root{
+  --navy:#1F3A5F; --slate:#4A5568; --gold:#B7791F; --ink:#1A202C;
+  --page:#F7F8FA; --panel:#FFFFFF; --line:#D5DAE1; --muted:#EDF0F4;
+  --pass-tint:#E8EEF6; --fail:#8B1E1E; --fail-tint:#FBECEC; --warn-tint:#F6E3B4;
+  --font-stack:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  --font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);
+  font-family:var(--font-stack);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:48px 28px 96px}
+a{color:var(--navy)}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+
+.masthead{border-top:6px solid var(--gold);padding-top:22px;margin-bottom:34px}
+.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);font-weight:700;margin:0 0 8px}
+h1{font-size:clamp(1.9rem,3.4vw + .8rem,2.6rem);line-height:1.15;margin:0 0 10px;
+  letter-spacing:-.015em;color:var(--navy)}
+.subject{font-family:var(--font-mono);font-size:.9rem;color:var(--slate);margin:0}
+
+.verdict{display:flex;flex-wrap:wrap;align-items:center;gap:18px;
+  border-radius:14px;padding:22px 26px;margin:30px 0 14px}
+.verdict.pass{background:var(--pass-tint);border:1px solid var(--navy)}
+.verdict.fail{background:var(--fail-tint);border:1px solid var(--fail)}
+.verdict .stamp{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.verdict.pass .stamp{color:var(--navy)}
+.verdict.fail .stamp{color:var(--fail)}
+.verdict p{margin:0;flex:1 1 340px;font-size:.98rem}
+
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;margin:0 0 44px}
+.tile{background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px}
+.tile .n{font-size:1.9rem;font-weight:800;line-height:1;letter-spacing:-.02em}
+.tile .k{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--slate);font-weight:700;margin-top:7px}
+.tile.good .n{color:var(--navy)}
+.tile.bad .n{color:var(--fail)}
+.tile.mute .n{color:var(--slate)}
+
+h2{font-size:1.32rem;letter-spacing:-.01em;margin:0 0 6px;padding-top:10px;color:var(--navy)}
+.lede{color:var(--slate);margin:0 0 20px;font-size:.94rem;max-width:70ch}
+section{margin-bottom:52px}
+
+.ledger{display:flex;flex-direction:column;gap:10px}
+.row{background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px;display:grid;
+  grid-template-columns:1fr auto;gap:6px 18px;align-items:start}
+.row.is-fail{border-color:var(--fail);background:var(--fail-tint)}
+.row.is-fail .rule,.row.is-fail .subjects{color:var(--ink)}
+.row.is-warn{border-color:var(--gold)}
+.row .name{font-weight:700;font-size:1rem}
+.row .cid{font-family:var(--font-mono);font-size:.74rem;color:var(--slate);
+  margin-left:8px;font-weight:400}
+.row .rule{grid-column:1;color:var(--slate);font-size:.88rem;max-width:66ch;margin:2px 0 0}
+.row .subjects{grid-column:1;font-family:var(--font-mono);font-size:.78rem;
+  color:var(--slate);margin-top:6px}
+.row .findings{grid-column:1/-1;margin:10px 0 0;padding:12px 14px;
+  background:var(--panel);border-left:3px solid var(--fail);
+  border-radius:6px;font-family:var(--font-mono);font-size:.82rem;
+  list-style:none}
+.row .findings li+li{margin-top:5px}
+
+.chip{grid-row:1;grid-column:2;font-size:.74rem;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.chip.clear{background:var(--navy);color:#FFFFFF}
+.chip.na{background:var(--muted);color:var(--slate);border:1px solid var(--line)}
+.chip.fail{background:var(--fail);color:#FFFFFF}
+.chip.warn{background:var(--warn-tint);color:var(--ink)}
+.chip.caught{background:var(--navy);color:#FFFFFF}
+.chip.missed{background:var(--fail);color:#FFFFFF}
+
+table{border-collapse:collapse;width:100%;background:var(--panel);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th{background:var(--muted);color:var(--ink);text-align:left;
+  font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);
+  font-size:.9rem;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--font-mono);text-align:right;white-space:nowrap}
+.swatch{display:inline-block;padding:6px 14px;border-radius:6px;
+  border:1px solid var(--line);font-size:.84rem;font-weight:600;white-space:nowrap}
+.hex{font-family:var(--font-mono);font-size:.76rem;color:var(--slate);
+  display:block;margin-top:4px}
+.margin-bar{display:block;height:5px;border-radius:3px;background:var(--navy);
+  margin-top:5px;min-width:3px}
+
+.scope li{margin-bottom:12px;max-width:74ch}
+.scope strong{display:block;font-size:.96rem}
+.scope span{color:var(--slate);font-size:.9rem}
+
+.provenance{border-top:1px solid var(--line);padding-top:20px;
+  font-family:var(--font-mono);font-size:.78rem;color:var(--slate);line-height:1.9}
+.provenance b{color:var(--ink);font-weight:600}
+@media print{body{background:#fff}.wrap{padding:0}.row,table,.tile{break-inside:avoid}}
+</style>
+<script type="application/json" id="wcag-contrast-manifest">
+{
+  "floor": 4.5,
+  "text_pairings": [
+    {
+      "label": "report body on page",
+      "fg": "#1A202C",
+      "bg": "#F7F8FA"
+    },
+    {
+      "label": "report body on panel",
+      "fg": "#1A202C",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "secondary text on page",
+      "fg": "#4A5568",
+      "bg": "#F7F8FA"
+    },
+    {
+      "label": "secondary text on panel",
+      "fg": "#4A5568",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "table header",
+      "fg": "#1A202C",
+      "bg": "#EDF0F4"
+    },
+    {
+      "label": "pass verdict text",
+      "fg": "#1F3A5F",
+      "bg": "#E8EEF6"
+    },
+    {
+      "label": "fail verdict text",
+      "fg": "#8B1E1E",
+      "bg": "#FBECEC"
+    },
+    {
+      "label": "fail row text",
+      "fg": "#1A202C",
+      "bg": "#FBECEC"
+    },
+    {
+      "label": "clear chip",
+      "fg": "#FFFFFF",
+      "bg": "#1F3A5F"
+    },
+    {
+      "label": "fail chip",
+      "fg": "#FFFFFF",
+      "bg": "#8B1E1E"
+    },
+    {
+      "label": "warn chip",
+      "fg": "#1A202C",
+      "bg": "#F6E3B4"
+    },
+    {
+      "label": "not-applicable chip",
+      "fg": "#4A5568",
+      "bg": "#EDF0F4"
+    },
+    {
+      "label": "heading on page",
+      "fg": "#1F3A5F",
+      "bg": "#F7F8FA"
+    }
+  ],
+  "ui_pairings": [
+    {
+      "label": "headroom bar on panel",
+      "fg": "#1F3A5F",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "masthead rule on page",
+      "fg": "#B7791F",
+      "bg": "#F7F8FA"
+    },
+    {
+      "label": "pass verdict border",
+      "fg": "#1F3A5F",
+      "bg": "#E8EEF6"
+    },
+    {
+      "label": "fail verdict border",
+      "fg": "#8B1E1E",
+      "bg": "#FBECEC"
+    },
+    {
+      "label": "warn row border",
+      "fg": "#B7791F",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "focus ring on page",
+      "fg": "#1F3A5F",
+      "bg": "#F7F8FA"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Accessibility report</p>
+    <h1>announcement_before.html</h1>
+    <p class="subject">This page has no title, so it is named by its file.</p>
+  </header>
+
+  <div class="verdict fail">
+    <span class="stamp">Does not meet the standard</span>
+    <p>5 of thirteen checks found a defect in <b>announcement_before.html</b>. Each is listed below with the exact line it sits on. Every finding is a blocking one: the page does not go out until they clear.</p>
+  </div>
+
+  <div class="scoreboard">
+    <div class="tile bad"><div class="n">5</div>
+      <div class="k">Defects found</div></div>
+    <div class="tile good"><div class="n">6</div>
+      <div class="k">Checks cleared</div></div>
+    <div class="tile mute"><div class="n">2</div>
+      <div class="k">Not applicable</div></div>
+    <div class="tile good">
+      <div class="n">0</div>
+      <div class="k">Needs a human look</div></div>
+    <div class="tile good"><div class="n">12/13</div>
+      <div class="k">Checks self-test</div></div>
+  </div>
+
+  <section>
+    <h2>What was checked</h2>
+    <p class="lede">Thirteen rules, each one a yes-or-no question a script can answer from the
+      page source. Every rule reports how many things it actually looked at. A rule
+      with nothing to examine is marked not applicable, not passed.</p>
+    <div class="ledger">
+      <article class="row is-fail"><div class="name">Image alternative text<span class="cid">WCAG 1.1.1</span></div><span class="chip fail">fail</span><p class="rule">Every image carries an alt attribute. An intentionally decorative image uses alt=&quot;&quot;; an image with no alt at all makes a screen reader read the file name aloud.</p><div class="subjects">1 image examined</div><ul class="findings"><li>&lt;img&gt; with no alt attribute, line 54</li></ul></article><article class="row is-fail"><div class="name">Text contrast<span class="cid">WCAG 1.4.3</span></div><span class="chip fail">fail</span><p class="rule">Every text-on-background pairing the page declares clears 4.5:1. The floor applies to all text, large text included.</p><div class="subjects">7 color pairings examined</div><ul class="findings"><li>RSVP deadline callout: #B7791F on #FFFFFF = 3.64:1</li></ul></article><article class="row"><div class="name">Tab order<span class="cid">WCAG 2.4.3</span></div><span class="chip na">not applicable</span><p class="rule">No element carries a positive tabindex. A positive value pulls an element out of reading order in the keyboard tab sequence.</p><div class="subjects">0 tabindex attributes examined</div></article><article class="row"><div class="name">Hidden focusable elements<span class="cid">WCAG 4.1.2</span></div><span class="chip na">not applicable</span><p class="rule">Nothing a keyboard can reach is hidden from screen readers. An element that is focusable but aria-hidden traps a keyboard user on something unannounced.</p><div class="subjects">0 aria-hidden elements examined</div></article><article class="row is-fail"><div class="name">Page language<span class="cid">WCAG 3.1.1</span></div><span class="chip fail">fail</span><p class="rule">The page declares its language, so a screen reader picks the right pronunciation rules instead of guessing.</p><div class="subjects">1 page root examined</div><ul class="findings"><li>&lt;html&gt; missing lang attribute (line 2)</li></ul></article><article class="row"><div class="name">Visible keyboard focus<span class="cid">WCAG 2.4.7</span></div><span class="chip clear">clear</span><p class="rule">If the default focus outline is removed, a :focus-visible replacement exists. Otherwise a keyboard user cannot see where they are on the page.</p><div class="subjects">1 stylesheet examined</div></article><article class="row is-fail"><div class="name">Heading structure<span class="cid">WCAG 1.3.1</span></div><span class="chip fail">fail</span><p class="rule">Heading levels descend one step at a time. A jump from h2 to h4 breaks the outline screen-reader users navigate by.</p><div class="subjects">4 headings examined</div><ul class="findings"><li>h1 straight to h3, line 57</li></ul></article><article class="row"><div class="name">Named controls<span class="cid">WCAG 4.1.2</span></div><span class="chip clear">clear</span><p class="rule">Every button and link has a name a screen reader can announce: its text, an aria-label, or the alt text of an icon inside it.</p><div class="subjects">2 buttons and links examined</div></article><article class="row is-fail"><div class="name">Page title<span class="cid">WCAG 2.4.2</span></div><span class="chip fail">fail</span><p class="rule">The page has a non-empty &lt;title&gt;. It is the first thing a screen reader announces, the browser tab&#x27;s label, and the document title of any PDF exported from the page.</p><div class="subjects">1 page root examined</div><ul class="findings"><li>&lt;title&gt; is empty</li></ul></article><article class="row"><div class="name">Bypass blocks<span class="cid">WCAG 2.4.1</span></div><span class="chip clear">clear</span><p class="rule">A page with more than one section has a &lt;main&gt; landmark or a skip link, so a keyboard or screen-reader user can jump past repeated blocks instead of tabbing through them.</p><div class="subjects">3 sections examined</div></article><article class="row"><div class="name">Table headers<span class="cid">WCAG 1.3.1</span></div><span class="chip clear">clear</span><p class="rule">Every data table has header cells marked with a scope, or a caption. A layout table marked role=&quot;presentation&quot; is exempt; whether it really is layout is a human call.</p><div class="subjects">1 table examined</div></article><article class="row"><div class="name">Non-text contrast<span class="cid">WCAG 1.4.11</span></div><span class="chip clear">clear</span><p class="rule">Every declared icon, rule, focus ring, chart axis or control border clears 3:1 against what it sits on.</p><div class="subjects">2 non-text pairings examined</div></article><article class="row"><div class="name">Language of parts<span class="cid">WCAG 3.1.2</span></div><span class="chip clear">clear</span><p class="rule">When the page declares that its content is in more than one language, every passage in a second language carries its own lang attribute so a screen reader switches pronunciation. Reported as a warning: whether a passage is in another language is a human read.</p><div class="subjects">1 declared language examined</div></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Color contrast, pairing by pairing</h2>
+    <p class="lede">Each row shows the real text color on the real background color, its
+      measured contrast ratio, and how much headroom it has over the 4.5:1 floor.
+      Tightest margin first. The ratio is arithmetic from the WCAG relative-luminance
+      formula, not an estimate.</p>
+    <table>
+      <thead><tr>
+        <th scope="col">Where it appears</th>
+        <th scope="col">As rendered</th>
+        <th scope="col">Ratio</th>
+        <th scope="col">Over floor</th>
+        <th scope="col">Verdict</th>
+      </tr></thead>
+      <tbody><tr><td>RSVP deadline callout</td><td><span class="swatch" style="color:#B7791F;background:#FFFFFF">Sample text</span><span class="hex">#B7791F on #FFFFFF</span></td><td class="num">3.64:1</td><td class="num">-0.86<span class="margin-bar" style="width:0%"></span></td><td><span class="chip fail">fail</span></td></tr><tr><td>secondary text</td><td><span class="swatch" style="color:#4A5568;background:#FFFFFF">Sample text</span><span class="hex">#4A5568 on #FFFFFF</span></td><td class="num">7.53:1</td><td class="num">+3.03<span class="margin-bar" style="width:30%"></span></td><td><span class="chip clear">pass</span></td></tr><tr><td>headings</td><td><span class="swatch" style="color:#1F3A5F;background:#FFFFFF">Sample text</span><span class="hex">#1F3A5F on #FFFFFF</span></td><td class="num">11.48:1</td><td class="num">+6.98<span class="margin-bar" style="width:70%"></span></td><td><span class="chip clear">pass</span></td></tr><tr><td>masthead text</td><td><span class="swatch" style="color:#FFFFFF;background:#1F3A5F">Sample text</span><span class="hex">#FFFFFF on #1F3A5F</span></td><td class="num">11.48:1</td><td class="num">+6.98<span class="margin-bar" style="width:70%"></span></td><td><span class="chip clear">pass</span></td></tr><tr><td>RSVP button</td><td><span class="swatch" style="color:#FFFFFF;background:#1F3A5F">Sample text</span><span class="hex">#FFFFFF on #1F3A5F</span></td><td class="num">11.48:1</td><td class="num">+6.98<span class="margin-bar" style="width:70%"></span></td><td><span class="chip clear">pass</span></td></tr><tr><td>table header</td><td><span class="swatch" style="color:#1A202C;background:#EDF0F4">Sample text</span><span class="hex">#1A202C on #EDF0F4</span></td><td class="num">14.28:1</td><td class="num">+9.78<span class="margin-bar" style="width:98%"></span></td><td><span class="chip clear">pass</span></td></tr><tr><td>body text</td><td><span class="swatch" style="color:#1A202C;background:#FFFFFF">Sample text</span><span class="hex">#1A202C on #FFFFFF</span></td><td class="num">16.32:1</td><td class="num">+11.82<span class="margin-bar" style="width:100%"></span></td><td><span class="chip clear">pass</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Proof the checks actually fire</h2>
+    <p class="lede">A check that has never failed has not been tested. Before writing this
+      report the tool made thirteen throwaway copies of the page, put one deliberate defect
+      into each, and re-ran the same checks. A check that did not catch its own planted
+      defect would be reported here as missed. A check marked not exercised could not take its
+      planted defect, usually because the page already has that defect. This ran just now,
+      against this file. It is not a record of an earlier test.</p>
+    <table>
+      <thead><tr>
+        <th scope="col">Check</th>
+        <th scope="col">Defect planted in a throwaway copy</th>
+        <th scope="col">Result</th>
+      </tr></thead>
+      <tbody><tr><td>Image alternative text<span class="hex">WCAG 1.1.1</span></td><td>an &lt;img&gt; with no alt attribute</td><td><span class="chip caught">caught</span></td></tr><tr><td>Text contrast<span class="hex">WCAG 1.4.3</span></td><td>one color pairing moved to #BDB5A8 on #FFFFFF (1.94:1)</td><td><span class="chip caught">caught</span></td></tr><tr><td>Tab order<span class="hex">WCAG 2.4.3</span></td><td>an element carrying tabindex=&quot;3&quot;</td><td><span class="chip caught">caught</span></td></tr><tr><td>Hidden focusable elements<span class="hex">WCAG 4.1.2</span></td><td>a link marked aria-hidden=&quot;true&quot;</td><td><span class="chip caught">caught</span></td></tr><tr><td>Page language<span class="hex">WCAG 3.1.1</span></td><td>the lang attribute stripped from &lt;html&gt;</td><td><span class="chip na">not exercised</span></td></tr><tr><td>Visible keyboard focus<span class="hex">WCAG 2.4.7</span></td><td>outline:none added with no :focus-visible rule</td><td><span class="chip caught">caught</span></td></tr><tr><td>Heading structure<span class="hex">WCAG 1.3.1</span></td><td>a heading level skipped</td><td><span class="chip caught">caught</span></td></tr><tr><td>Named controls<span class="hex">WCAG 4.1.2</span></td><td>an empty &lt;button&gt;&lt;/button&gt;</td><td><span class="chip caught">caught</span></td></tr><tr><td>Page title<span class="hex">WCAG 2.4.2</span></td><td>the &lt;title&gt; emptied</td><td><span class="chip caught">caught</span></td></tr><tr><td>Bypass blocks<span class="hex">WCAG 2.4.1</span></td><td>&lt;main&gt; and any skip link removed, two extra sections added</td><td><span class="chip caught">caught</span></td></tr><tr><td>Table headers<span class="hex">WCAG 1.3.1</span></td><td>a &lt;table&gt; with no header cells and no caption</td><td><span class="chip caught">caught</span></td></tr><tr><td>Non-text contrast<span class="hex">WCAG 1.4.11</span></td><td>a ui_pairing declared at #BDB5A8 on #FFFFFF (1.94:1)</td><td><span class="chip caught">caught</span></td></tr><tr><td>Language of parts<span class="hex">WCAG 3.1.2</span></td><td>content-languages declaring &quot;eo&quot; with no element in it</td><td><span class="chip caught">caught</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="scope">
+    <h2>What needs your eyes</h2>
+    <p class="lede">Two axes, kept apart: how serious a finding is, and how sure the tool is
+      of it. Every verdict in the ledger above was settled by the script. The items here were
+      not: each is a question the script raised but cannot answer. A finding that rests on a
+      script fact plus a human call takes the human's grade, never the script's, so nothing
+      listed here is counted as passed or failed above.</p>
+    <ul><li><strong>Nothing raised</strong><span>No check on this page left a question open. The standing questions below still apply to every page.</span></li></ul>
+  </section>
+
+  <section class="scope">
+    <h2>What this report does not decide</h2>
+    <p class="lede">The checks answer questions with one correct answer. Judgment calls stay
+      with a person, and naming them is part of the report rather than a footnote to it.</p>
+    <ul><li><strong>Whether alt text is <em>accurate</em></strong><span>The check proves an alt attribute exists. Whether it describes the image is a human read.</span></li><li><strong>Whether alt="" is <em>appropriate</em></strong><span>An empty alt correctly hides a decorative image. Deciding an image is decorative is a human call.</span></li><li><strong>Text styled to look like a heading</strong><span>Bold text standing in for a heading is caught in Word files, not on web pages. On a page, a person checks that every visual heading is a real heading tag.</span></li><li><strong>Reading order</strong><span>The checks look at heading levels, not whether the page's sequence makes sense read aloud.</span></li><li><strong>Text over photos or gradients</strong><span>Contrast over a non-solid background cannot be resolved from the source. Such a pairing is reported as unresolved and fails, rather than passing silently.</span></li><li><strong>Anything only a live page shows</strong><span>Focus traps in a pop-up, motion, and screen-reader announcement order need a rendered page and assistive technology, not a source scan.</span></li></ul>
+  </section>
+
+  <footer class="provenance">
+    <b>Generated</b> October 21, 2026 at 12:37 PM<br>
+    <b>Artifact audited</b> announcement_before.html &middot; sha256 f5da6c007b47<br>
+    <b>Checks</b> checks/web.py &middot; sha256 2212d3f08140<br>
+    <b>Contrast math</b> checks/contrast.py &middot; sha256 0d78cd392004
+      &middot; floor 4.5:1<br>
+    <b>Runtime</b> Python 3.14.3, standard library only
+  </footer>
+
+</main>
+</body>
+</html>

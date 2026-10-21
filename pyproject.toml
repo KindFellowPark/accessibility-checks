@@ -1,0 +1,10 @@
+[project]
+name = "accessibility-checks"
+version = "1.0.0"
+description = "Accessibility checks for finished HTML pages and Word files, with a plain-language report."
+requires-python = ">=3.10"
+dependencies = ["python-docx>=1.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
